@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naira to Dollar Converter</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+
+    <h2>Naira to Dollar Converter</h2>
+    <input type="number" id="naira" placeholder="Enter amount in Naira">
+    <button id="convert-btn">Convert</button>
+    <p id="result"></p>
+
+    <py-script>
+        from pyodide.ffi import create_proxy
+
+        def convert_currency(event):
+            # Get the input value
+            naira_value = Element("naira").element.value
+            if naira_value:  # Check if there is input
+                naira = float(naira_value)
+                # Set a fixed conversion rate (this can be dynamic if pulling from an API)
+                conversion_rate = 1600.0  # Example conversion rate
+                # Convert to dollars
+                dollars = naira / conversion_rate
+                # Update the result
+                Element("result").element.innerText = f"{naira} Naira = {dollars:.2f} USD"
+            else:
+                Element("result").element.innerText = "Please enter a valid amount."
+
+        # Bind the button click to the convert_currency function
+        convert_btn = Element("convert-btn")
+        convert_btn.element.addEventListener("click", create_proxy(convert_currency))
+    </py-script>
+
+</body>
+</html>

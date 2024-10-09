@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+</head>
+<body>
+
+    <h2>Login Page</h2>
+    
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter your username"><br><br>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter your password"><br><br>
+    
+    <button id="login-btn">Login</button>
+    
+    <p id="welcome-message"></p>
+
+    <py-script>
+        from pyodide.ffi import create_proxy
+
+        def login(event):
+            # Get the username and password input values
+            username = Element("username").element.value
+            password = Element("password").element.value
+            
+            if username and password:
+                # Display a welcome message using the username
+                Element("welcome-message").element.innerText = f"Welcome, {username}!"
+            else:
+                Element("welcome-message").element.innerText = "Please enter both username and password."
+
+        # Bind the button click to the login function
+        login_btn = Element("login-btn")
+        login_btn.element.addEventListener("click", create_proxy(login))
+    </py-script>
+
+</body>
+</html>
